@@ -29,6 +29,11 @@
   width: 50%;
   height: 350px;
   border:2px solid rgba(0,0,0,0.88);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493287035729&di=54ce662aacaee735122c1b8a4e97dab1&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fd62a6059252dd42a9711a527013b5bb5c9eab826.jpg);
 }
 .img-after{
   width: 50%;
@@ -36,6 +41,48 @@
   border:2px solid rgba(0,0,0,0.88);
   position: absolute;
   left: 500px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493287035729&di=0f17e0ebf81026d64ea8294408dc0ea4&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fd53f8794a4c27d1ee59e974819d5ad6edcc43885.jpg);
+}
+.btn-before{
+  position: absolute;
+  top: 370px;
+  left:250px;
+  background:#C0C0C0;
+  border-radius:8px;
+  width: 60px;
+  height: 30px;
+}
+.btn-after{
+  position: absolute;
+  top: 370px;
+  left:750px;
+  background:#C0C0C0;
+  border-radius:8px;
+  width: 60px;
+  height: 30px;
+}
+.btn-one{
+  background:#C0C0C0;
+  border-radius:8px;
+  width: 80px;
+  height: 40px;
+}
+.btn-choose{
+  position: fixed;
+  width: 100px;
+  height: 400px;
+  right: 1px;
+  top: 100px;
+}
+.btn-choose div{
+  width: 100%;
+  height: 40px;
+  margin-bottom: 3px;
+  background-color: #C0C0C0;
+  text-align: center;
+  line-height: 40px;
 }
 
 @keyframes App-logo-spin {
