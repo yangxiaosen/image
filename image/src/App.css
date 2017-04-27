@@ -17,6 +17,26 @@
 .App-intro {
   font-size: large;
 }
+.img-content{
+  margin: 0 auto;
+  width: 1000px;
+  height: 400px;
+  box-shadow:0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+  position: relative;
+}
+.img-before{
+  position: absolute;
+  width: 50%;
+  height: 350px;
+  border:2px solid rgba(0,0,0,0.88);
+}
+.img-after{
+  width: 50%;
+  height: 350px;
+  border:2px solid rgba(0,0,0,0.88);
+  position: absolute;
+  left: 500px;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
