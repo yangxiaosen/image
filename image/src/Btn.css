@@ -1,0 +1,17 @@
+.btn-choose{
+  position: fixed;
+  width: 100px;
+  height: 400px;
+  right: 1px;
+  top: 150px;
+}
+.btn-choose div{
+  width: 100%;
+  height: 40px;
+  margin-bottom: 5px;
+  background-color: #6699FF;
+  text-align: center;
+  line-height: 40px;
+  border-radius:8px;
+  box-shadow:0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+}
