@@ -11,8 +11,9 @@ class Btn extends Component {
 		    }
 		    var image = document.getElementById('imagehandle');
             var texture = canvas.texture(image);
-            canvas.draw(texture).ink(0.10).update();
-            console.log(canvas);
+            canvas.draw(texture).ink(0.50).update();
+            //console.log(canvas);
+            //console.log(canvas.toDataURL());
             /*image.parentNode.insertBefore(canvas, image);
             image.parentNode.removeChild(image);*/
             image.src=canvas.toDataURL();
