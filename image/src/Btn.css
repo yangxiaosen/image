@@ -6,6 +6,7 @@
   top: 150px;
 }
 .btn-choose div{
+  cursor: pointer;
   width: 100%;
   height: 40px;
   margin-bottom: 5px;
@@ -14,4 +15,89 @@
   line-height: 40px;
   border-radius:8px;
   box-shadow:0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+}
+.btn-list{
+  visibility: hidden;
+  position: fixed;
+  width: 100px;
+  right: 100px;
+  top: 150px;
+}
+.btn-list div{
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  margin-bottom: 5px;
+  text-align: center;
+  line-height: 40px;
+  border-radius:8px;
+  box-shadow:0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.btn-listcopy div{
+  position: fixed;
+  width: 100px;
+  top:0px;
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  margin-bottom: 5px;
+  text-align: center;
+  line-height: 40px;
+  border-radius:8px;
+  box-shadow:0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.glfxshow{
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+  margin-bottom: 5px;
+  text-align: center;
+  line-height: 40px;
+  border-radius:8px;
+  box-shadow:0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-color: #6699FF;
+}
+.watermark1{
+  background-image:url(./send_qianduan/shipin_erduo.png);
+}
+.watermark2{
+  background-image:url(./send_qianduan/shipin_haoqi.png);
+}
+.watermark3{
+  background-image:url(./send_qianduan/shipin_weiqu.png);
+}
+.watermark4{
+  background-image:url(./send_qianduan/show_shuiyin1.png);
+}
+.watermark5{
+  background-image:url(./send_qianduan/show_shuiyin2.png);
+}
+.watermark6{
+  background-image:url(./send_qianduan/show_shuiyin3.png);
+}
+.border1{
+  background-image:url(./send_qianduan/border_side1.jpg);
+}
+.border2{
+  background-image:url(./send_qianduan/border_side2.JPG);
+}
+.border3{
+  background-image:url(./send_qianduan/border_side3.JPG);
+}
+.border4{
+  background-image:url(./send_qianduan/chang_cup.jpg);
+}
+.border5{
+  background-image:url(./send_qianduan/chang_jingzi.jpg);
+}
+.border6{
+  background-image:url(./send_qianduan/chang_love.jpg);
 }
