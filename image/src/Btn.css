@@ -35,7 +35,10 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-
+.btn-list>div>input{
+  width: 90%;
+  height:60%;
+}
 .btn-listcopy div{
   position: fixed;
   width: 100px;
@@ -50,6 +53,12 @@
   box-shadow:0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
   background-repeat: no-repeat;
   background-size: 100% 100%;
+}
+.btn-listcopy>div>input{
+  width: 95%;
+  height:80%;
+  border: none;
+  background-color:rgba(0,0,0,0);
 }
 
 .glfxshow{

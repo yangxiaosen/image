@@ -13,7 +13,14 @@ class App extends Component {
     super(props);
     this.state = { background: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493287035729&di=0f17e0ebf81026d64ea8294408dc0ea4&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fd53f8794a4c27d1ee59e974819d5ad6edcc43885.jpg",
                    after: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493287035729&di=0f17e0ebf81026d64ea8294408dc0ea4&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fd53f8794a4c27d1ee59e974819d5ad6edcc43885.jpg",
-                   sign:"hhh"};
+                   id:"111",
+                   shipin1:"0:0",
+                   shipin2:"0:0",
+                   shipin3:"0:0",
+                   text:"0:0",
+                   shipin4:"0:0",
+                   shipin5:"0:0",
+                   shipin6:"0:0"};
   }
 
   handleClick(){
@@ -54,6 +61,10 @@ class App extends Component {
     //计算相对位置
     console.log(e.clientX-imagel);
     console.log(e.clientY-imaget);
+    var x=(e.clientX-imagel)/480;
+    var y=(e.clientY-imaget)/350;
+    //拼接成字符串
+    var position=x+':'+y;
 
     var dataid;
     if(/copy/g.test(data)){
@@ -65,23 +76,20 @@ class App extends Component {
     console.log(tt);
     tt.style.top=clientt+"px";
     tt.style.left=clientl+"px";
+    this.setState({target:});
   }
 
   allowDrop(e){
     e.preventDefault();
   }
 
-  //提交图片和标识符
+  //提交图片
   submitimg(){
     //获取图片文件
     var imageinput=this.refs.imageinput;
     var image=imageinput.files[0];
     var formData = new FormData();
     formData.append('image',image);
-    //获取日期时间作为标识符
-    var sign=new Date();
-    formData.append('sign',sign.getTime());
-    console.log(sign.getTime());
     //提交数据
     var url;
     var obj=new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
@@ -89,7 +97,6 @@ class App extends Component {
     obj.onreadystatechange=function(){
         if (obj.readyState == 4 && obj.status == 200) { // readyState==4说明请求已完成
             //fn.call(this, obj.responseText)从服务器获得数据
-            this.setState({sign:sign.getTime()+''});
         }
     };
     obj.send(formData);
@@ -109,6 +116,15 @@ class App extends Component {
           }
       };
       obj.send();
+  }
+
+  //与子组件交互，获取子组件修改后图片链接
+  setAfter(url){
+    this.setState({after:url});
+  }
+  //与子组件交互，获取文字水印信息
+  setText(msg){
+    this.setState({text:msg});
   }
 
   render() {
@@ -133,7 +149,7 @@ class App extends Component {
            </a>
         </div>
         <button className="btn-one">一键处理</button>
-        <Btn sign={this.state.sign}/>
+        <Btn sign={this.state.sign} setafter={this.setAfter} settext={this.setText}/>
       </div>
     );
   }

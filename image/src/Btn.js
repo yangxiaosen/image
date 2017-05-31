@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import './Btn.css';
 import fx from 'glfx';
 class Btn extends Component {
+	constructor(props) {
+    super(props);
+    this.state = { id:'111',
+                   action:'none'};
+  }
+
 	handleClick(){
 		    try {
 		        var canvas = fx.canvas();
@@ -39,26 +45,42 @@ class Btn extends Component {
 		console.log(e.target);
 	}
 
+	//点击提交数据
+	clicksubmit(e){
+		//获取操作名称
+		var action=e.target.getAttribute("data-target");
+		action=action+'='+action+',';
+		var id=this.state.id;
+		this.submitshow1(id,action);
+	}
+
 	
 	//提交操作,不需要坐标参数
-	submitshow1(action){
+	submitshow1(id,action){
 		var obj=new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
-	    var url;
-	    url=url+'?'+action+'='+action;
+	    var url='http://119.29.34.218:8080/VHDL/FileAction/operation';
+	    url=url+'?id='+id+'&operation='+action;
 	    obj.open('GET',url,true);
 	    obj.onreadystatechange=function(){
-	        if (obj.readyState == 4 && obj.status == 200) { // readyState==4说明请求已完成
-	            //fn.call(this, obj.responseText)从服务器获得数据
-	            //this.setState({sign:sign.getTime()+''});
+	        if (obj.readyState == 4 && obj.status == 200) {
+	        	var imageurl=obj.responseText;
+	        	this.props.setafter(imageurl);
+	        // readyState==4说明请求已完成
+	        //fn.call(this, obj.responseText)从服务器获得数据
+	        //this.setState({sign:sign.getTime()+''});
 	        }
 	    };
 	    obj.send();
 	}
 
 	//刷新图标位置
-	freshicon(){
+	/*freshicon(){
 		//获取图标dom
 		document.getElementByClassName("btn-listcopy");
+	}*/
+	//监听文字改变
+	handleChange(e){
+		this.props.settext(e.target.value());
 	}
 
 	render(){
@@ -83,7 +105,7 @@ class Btn extends Component {
             	<div className="watermark1" id="watermark1" data-target="shipin1" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark2" id="watermark2" data-target="shipin2" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark3" id="watermark3" data-target="shipin3" draggable="true" onDragStart={this.drag}></div>
-	            <div>文字</div>
+	            <div id="text" data-target="text" draggable="true" onDragStart={this.drag}><input type="text" placeholder="文字"/></div>
 	            <div className="watermark4" id="watermark4" data-target="shipin4" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark5" id="watermark5" data-target="shipin5" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark6" id="watermark6" data-target="shipin6" draggable="true" onDragStart={this.drag}></div>
@@ -92,20 +114,20 @@ class Btn extends Component {
             	<div className="watermark1" id="watermark1copy" data-target="shipin1" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark2" id="watermark2copy" data-target="shipin2" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark3" id="watermark3copy" data-target="shipin3" draggable="true" onDragStart={this.drag}></div>
-	            <div>文字</div>
+	            <div id="textcopy" data-target="text" draggable="true" onDragStart={this.drag}><input type="text" onChange={this.handleChange.bind(this)} placeholder="文字"/></div>
 	            <div className="watermark4" id="watermark4copy" data-target="shipin4" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark5" id="watermark5copy" data-target="shipin5" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark6" id="watermark6copy" data-target="shipin6" draggable="true" onDragStart={this.drag}></div>
             </div>
             <div id="btn-list3" className="btn-list">
-            	<div className="border1">边框1</div>
-	            <div className="border2">边框2</div>
-	            <div className="border3">边框3</div>
+            	<div className="border1" data-target="border1" onClick={this.clicksubmit.bind(this)}>边框1</div>
+	            <div className="border2" data-target="border2" onClick={this.clicksubmit.bind(this)}>边框2</div>
+	            <div className="border3" data-target="border3" onClick={this.clicksubmit.bind(this)}>边框3</div>
             </div>
             <div id="btn-list4" className="btn-list">
-            	<div className="border4"></div>
-	            <div className="border5"></div>
-	            <div className="border6"></div>
+            	<div className="border4" data-target="show1" onClick={this.clicksubmit.bind(this)}></div>
+	            <div className="border5" data-target="show2" onClick={this.clicksubmit.bind(this)}></div>
+	            <div className="border6" data-target="show3" onClick={this.clicksubmit.bind(this)}></div>
             </div>
             </div>
 			);
