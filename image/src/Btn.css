@@ -42,7 +42,8 @@
 .btn-listcopy div{
   position: fixed;
   width: 100px;
-  top:0px;
+  top:-100px;
+  left:-100px;
   cursor: pointer;
   width: 100px;
   height: 40px;

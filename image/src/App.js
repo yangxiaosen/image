@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 import logo from './logo.svg';
 import Btn from './Btn';
 import './App.css';
@@ -20,7 +21,8 @@ class App extends Component {
                    text:"0:0",
                    shipin4:"0:0",
                    shipin5:"0:0",
-                   shipin6:"0:0"};
+                   shipin6:"0:0",
+                   textcontent:"by yang"};
   }
 
   handleClick(){
@@ -76,7 +78,32 @@ class App extends Component {
     console.log(tt);
     tt.style.top=clientt+"px";
     tt.style.left=clientl+"px";
-    this.setState({target:});
+    //条件判断
+    switch(target){
+      case 'shipin1':
+      this.setState({shipin1:position});
+      break;
+      case 'shipin2':
+      this.setState({shipin2:position});
+      break;
+      case 'shipin3':
+      this.setState({shipin3:position});
+      break;
+      case 'text':
+      this.setState({text:position});
+      break;
+      case 'shipin4':
+      this.setState({shipin4:position});
+      break;
+      case 'shipin5':
+      this.setState({shipin5:position});
+      break;
+      case 'shipin6':
+      this.setState({shipin6:position});
+      break;
+      default:
+    }
+    //this.setState({target:position});
   }
 
   allowDrop(e){
@@ -97,12 +124,16 @@ class App extends Component {
     obj.onreadystatechange=function(){
         if (obj.readyState == 4 && obj.status == 200) { // readyState==4说明请求已完成
             //fn.call(this, obj.responseText)从服务器获得数据
+            var img=obj.responseText.url;
+            var id=obj.responseText.id;
+            this.setState({after:img,
+                           id:id});
         }
     };
     obj.send(formData);
   }
   //提交操作
-  submitshow(action,x,y){
+  /*submitshow(action,x,y){
     var obj=new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
       var url;
       x=x/480;
@@ -111,12 +142,11 @@ class App extends Component {
       obj.open('GET',url,true);
       obj.onreadystatechange=function(){
           if (obj.readyState == 4 && obj.status == 200) { // readyState==4说明请求已完成
-              //fn.call(this, obj.responseText)从服务器获得数据
-              //this.setState({sign:sign.getTime()+''});
+              //this.freshPosition();
           }
       };
       obj.send();
-  }
+  }*/
 
   //与子组件交互，获取子组件修改后图片链接
   setAfter(url){
@@ -124,7 +154,59 @@ class App extends Component {
   }
   //与子组件交互，获取文字水印信息
   setText(msg){
-    this.setState({text:msg});
+    this.setState({textcontent:msg});
+    //console.log(msg);
+  }
+  //刷新图标位置
+  freshPosition(){
+    var icon=document.getElementsByClassName("btn-listcopy").getElementsByTagName("div");
+    for(var i=0;i<icon.length;i++){
+      var dom=icon[i];
+      dom.style.top=-100+'px';
+      dom.style.left=-100+'px';
+    }
+  }
+
+  //一键提交水印图标
+  subData(){
+    var icon=document.getElementsByClassName("btn-listcopy")[0].getElementsByTagName("div");
+    //判断多少个水印图标在图片上
+    var action='';
+    for(var i=0;i<icon.length;i++){
+      //console.log(icon[i].offsetTop);
+      //console.log(icon[i].getAttribute("data-target"));
+      var target=icon[i].getAttribute("data-target");
+      if(icon[i].offsetTop>0){
+          if(target=='text'){
+            action=action+target+'='+this.state[target+'']+':'+this.state.textcontent+',';
+          }else{
+            action=action+target+'='+this.state[target+'']+',';
+          }
+      }
+    }
+    
+    console.log(action);
+    if(action!=''){
+      //console.log(action);
+      
+      var url='http://119.29.34.218:8080/VHDL/FileAction/operation';
+      url=url+'?id='+this.state.id+'&operation='+action;
+      /*$.get(url,function(data){
+        console.log(data);
+      });*/
+      $.getJSON(url,function(data){
+        console.log(data);
+      })
+      /*var obj=new XMLHttpRequest();
+      obj.open('GET',url,true);
+      obj.onreadystatechange=function(){
+          if (obj.readyState == 4 && obj.status == 200) { // readyState==4说明请求已完成
+              //this.freshPosition();
+              console.log(obj.responseText);
+          }
+      }
+      obj.send();*/
+    }
   }
 
   render() {
@@ -142,14 +224,14 @@ class App extends Component {
              <input type="file" ref="imageinput" id="imageinput" onChange={this.handleChange.bind(this)}/>
              <img src={this.state.background} className="image-content" />
            </div>
-           <div className="img-after" id="imgafter" onDrop={this.drop} onDragOver={this.allowDrop}><img src={this.state.after} className="image-content" id="imagehandle" /></div>
+           <div className="img-after" id="imgafter" onDrop={this.drop.bind(this)} onDragOver={this.allowDrop.bind(this)}><img src={this.state.after} className="image-content" id="imagehandle" /></div>
            <button className="btn-before" onClick={this.handleClick.bind(this)}>上传图片</button>
            <a href={this.state.after} download="已处理">
            <button className="btn-after">保存图片</button>
            </a>
         </div>
-        <button className="btn-one">一键处理</button>
-        <Btn sign={this.state.sign} setafter={this.setAfter} settext={this.setText}/>
+        <button className="btn-one" onClick={this.subData.bind(this)}>一键处理</button>
+        <Btn sign={this.state.sign} setafter={this.setAfter.bind(this)} settext={this.setText.bind(this)}/>
       </div>
     );
   }

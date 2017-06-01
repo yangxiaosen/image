@@ -80,7 +80,7 @@ class Btn extends Component {
 	}*/
 	//监听文字改变
 	handleChange(e){
-		this.props.settext(e.target.value());
+		this.props.settext(e.target.value);
 	}
 
 	render(){
