@@ -14,7 +14,7 @@ class App extends Component {
     super(props);
     this.state = { background: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493287035729&di=0f17e0ebf81026d64ea8294408dc0ea4&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fd53f8794a4c27d1ee59e974819d5ad6edcc43885.jpg",
                    after: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493287035729&di=0f17e0ebf81026d64ea8294408dc0ea4&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fd53f8794a4c27d1ee59e974819d5ad6edcc43885.jpg",
-                   id:"111",
+                   id:"1",
                    shipin1:"0:0",
                    shipin2:"0:0",
                    shipin3:"0:0",
@@ -43,7 +43,7 @@ class App extends Component {
     oFReader.onload=function(e){
       self.setState({background:e.target.result,
         after:e.target.result});
-    }
+    };
   }
 
   drop(e){
@@ -113,24 +113,36 @@ class App extends Component {
   //提交图片
   submitimg(){
     //获取图片文件
+    var self=this;
     var imageinput=this.refs.imageinput;
     var image=imageinput.files[0];
     var formData = new FormData();
     formData.append('image',image);
     //提交数据
-    var url;
+    var url='http://119.29.34.218:8080/VHDL/FileAction/upload';
     var obj=new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
     obj.open('POST',url,true);
     obj.onreadystatechange=function(){
         if (obj.readyState == 4 && obj.status == 200) { // readyState==4说明请求已完成
             //fn.call(this, obj.responseText)从服务器获得数据
+            console.log(obj.responseText);
             var img=obj.responseText.url;
             var id=obj.responseText.id;
-            this.setState({after:img,
-                           id:id});
+            /*self.setState({after:img,
+                           id:id});*/
         }
     };
     obj.send(formData);
+    /*$.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'JSONP',//here
+        data:formData,
+        success: function (data) {
+          console.log(data);
+        }
+      });*/
+
   }
   //提交操作
   /*submitshow(action,x,y){
@@ -191,12 +203,20 @@ class App extends Component {
       
       var url='http://119.29.34.218:8080/VHDL/FileAction/operation';
       url=url+'?id='+this.state.id+'&operation='+action;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'JSONP',//here
+        success: function (data) {
+          console.log(data);
+        }
+      });
       /*$.get(url,function(data){
         console.log(data);
       });*/
-      $.getJSON(url,function(data){
+      /*$.getJSON(url,function(data){
         console.log(data);
-      })
+      });*/
       /*var obj=new XMLHttpRequest();
       obj.open('GET',url,true);
       obj.onreadystatechange=function(){
