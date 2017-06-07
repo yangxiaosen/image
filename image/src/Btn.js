@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './Btn.css';
+import $ from 'jquery';
 import fx from 'glfx';
 class Btn extends Component {
 	constructor(props) {
     super(props);
-    this.state = { id:'1',
+    //var id=this.props.sign;
+    this.state = { id:1,
                    action:'none'};
   }
 
@@ -17,7 +19,8 @@ class Btn extends Component {
 		    }
 		    var image = document.getElementById('imagehandle');
             var texture = canvas.texture(image);
-            canvas.draw(texture).ink(0.50).update();
+            //canvas.draw(texture).ink(0.50).update();
+            canvas.draw(texture).lensBlur(10, 0.75, 0).update();
             //console.log(canvas);
             //console.log(canvas.toDataURL());
             /*image.parentNode.insertBefore(canvas, image);
@@ -50,17 +53,19 @@ class Btn extends Component {
 		//获取操作名称
 		var action=e.target.getAttribute("data-target");
 		action=action+'='+action+',';
-		var id=this.state.id;
+		var id=this.props.sign;
 		this.submitshow1(id,action);
+		this.freshIcon();
 	}
 
 	
 	//提交操作,不需要坐标参数
 	submitshow1(id,action){
-		var obj=new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
+		var self=this;
+		//var obj=new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
 	    var url='http://119.29.34.218:8080/VHDL/FileAction/operation';
 	    url=url+'?id='+id+'&operation='+action;
-	    obj.open('GET',url,true);
+	    /*obj.open('GET',url,true);
 	    obj.onreadystatechange=function(){
 	        if (obj.readyState == 4 && obj.status == 200) {
 	        	var imageurl=obj.responseText;
@@ -70,14 +75,31 @@ class Btn extends Component {
 	        //this.setState({sign:sign.getTime()+''});
 	        }
 	    };
-	    obj.send();
+	    obj.send();*/
+	    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'JSONP',//here
+        success: function (data) {
+          console.log(data);
+          if(data.url){
+          	//self.setState({after:data.url});
+          	this.props.setafter(data.url);
+          }else{
+          	alert("处理失败");
+          }
+        }
+        });
 	}
 
 	//刷新图标位置
-	/*freshicon(){
+	freshIcon(){
 		//获取图标dom
-		document.getElementByClassName("btn-listcopy");
-	}*/
+		var btns=document.getElementsByClassName("btn-list");
+		for(var i=0;i<btns.length;i++){
+			btns[i].style.visibility="hidden";
+		}
+	}
 	//监听文字改变
 	handleChange(e){
 		this.props.settext(e.target.value);
@@ -105,19 +127,19 @@ class Btn extends Component {
             	<div className="watermark1" id="watermark1" data-target="shipin1" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark2" id="watermark2" data-target="shipin2" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark3" id="watermark3" data-target="shipin3" draggable="true" onDragStart={this.drag}></div>
-	            <div id="text" data-target="text" draggable="true" onDragStart={this.drag}><input type="text" placeholder="文字"/></div>
+	            {/*<div id="text" data-target="text" draggable="true" onDragStart={this.drag}><input type="text" placeholder="文字"/></div>*/}
 	            <div className="watermark4" id="watermark4" data-target="shipin4" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark5" id="watermark5" data-target="shipin5" draggable="true" onDragStart={this.drag}></div>
-	            <div className="watermark6" id="watermark6" data-target="shipin6" draggable="true" onDragStart={this.drag}></div>
+	            {/*<div className="watermark6" id="watermark6" data-target="shipin6" draggable="true" onDragStart={this.drag}></div>*/}
             </div>
             <div className="btn-listcopy">
             	<div className="watermark1" id="watermark1copy" data-target="shipin1" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark2" id="watermark2copy" data-target="shipin2" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark3" id="watermark3copy" data-target="shipin3" draggable="true" onDragStart={this.drag}></div>
-	            <div id="textcopy" data-target="text" draggable="true" onDragStart={this.drag}><input type="text" onChange={this.handleChange.bind(this)} placeholder="文字"/></div>
+	            {/*<div id="textcopy" data-target="text" draggable="true" onDragStart={this.drag}><input type="text" onChange={this.handleChange.bind(this)} placeholder="文字"/></div>*/}
 	            <div className="watermark4" id="watermark4copy" data-target="shipin4" draggable="true" onDragStart={this.drag}></div>
 	            <div className="watermark5" id="watermark5copy" data-target="shipin5" draggable="true" onDragStart={this.drag}></div>
-	            <div className="watermark6" id="watermark6copy" data-target="shipin6" draggable="true" onDragStart={this.drag}></div>
+	            {/*<div className="watermark6" id="watermark6copy" data-target="shipin6" draggable="true" onDragStart={this.drag}></div>*/}
             </div>
             <div id="btn-list3" className="btn-list">
             	<div className="border1" data-target="border1" onClick={this.clicksubmit.bind(this)}>边框1</div>
@@ -127,7 +149,7 @@ class Btn extends Component {
             <div id="btn-list4" className="btn-list">
             	<div className="border4" data-target="show1" onClick={this.clicksubmit.bind(this)}></div>
 	            <div className="border5" data-target="show2" onClick={this.clicksubmit.bind(this)}></div>
-	            <div className="border6" data-target="show3" onClick={this.clicksubmit.bind(this)}></div>
+	            {/*<div className="border6" data-target="show3" onClick={this.clicksubmit.bind(this)}></div>*/}
             </div>
             </div>
 			);

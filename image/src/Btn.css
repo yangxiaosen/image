@@ -76,22 +76,22 @@
   background-color: #6699FF;
 }
 .watermark1{
-  background-image:url(./send_qianduan/shipin_erduo.png);
+  background-image:url(./send_qianduan/shipin1.png);
 }
 .watermark2{
-  background-image:url(./send_qianduan/shipin_haoqi.png);
+  background-image:url(./send_qianduan/shipin2.png);
 }
 .watermark3{
-  background-image:url(./send_qianduan/shipin_weiqu.png);
+  background-image:url(./send_qianduan/shipin3.png);
 }
 .watermark4{
-  background-image:url(./send_qianduan/show_shuiyin1.png);
+  background-image:url(./send_qianduan/shipin4.png);
 }
 .watermark5{
-  background-image:url(./send_qianduan/show_shuiyin2.png);
+  background-image:url(./send_qianduan/shipin5.png);
 }
 .watermark6{
-  background-image:url(./send_qianduan/show_shuiyin3.png);
+  background-image:url(./send_qianduan/shipin5.png);
 }
 .border1{
   background-image:url(./send_qianduan/border_side1.jpg);

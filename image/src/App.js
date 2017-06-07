@@ -104,6 +104,7 @@ class App extends Component {
       default:
     }
     //this.setState({target:position});
+    this.freshIcon()
   }
 
   allowDrop(e){
@@ -128,8 +129,10 @@ class App extends Component {
         if (obj.readyState == 4 && obj.status == 200) { // readyState==4说明请求已完成
             //fn.call(this, obj.responseText)从服务器获得数据
             console.log(obj.responseText);
-            var img=obj.responseText.url;
-            var id=obj.responseText.id;
+            var img=JSON.parse(obj.responseText).url;
+            var id=JSON.parse(obj.responseText).id;
+            console.log(img);
+            console.log(id);
             self.setState({after:img,
                            id:id});
         }
@@ -173,16 +176,25 @@ class App extends Component {
   }
   //刷新图标位置
   freshPosition(){
-    var icon=document.getElementsByClassName("btn-listcopy").getElementsByTagName("div");
+    var icon=document.getElementsByClassName("btn-listcopy")[0].getElementsByTagName("div");
     for(var i=0;i<icon.length;i++){
       var dom=icon[i];
       dom.style.top=-100+'px';
       dom.style.left=-100+'px';
     }
   }
+  //刷新操作按钮位置
+  freshIcon(){
+    //获取图标dom
+    var btns=document.getElementsByClassName("btn-list");
+    for(var i=0;i<btns.length;i++){
+      btns[i].style.visibility="hidden";
+    }
+  }
 
   //一键提交水印图标
   subData(){
+    var self=this;
     var icon=document.getElementsByClassName("btn-listcopy")[0].getElementsByTagName("div");
     //判断多少个水印图标在图片上
     var action='';
@@ -211,6 +223,13 @@ class App extends Component {
         dataType: 'JSONP',//here
         success: function (data) {
           console.log(data);
+          self.freshPosition();
+          if(data.url){
+            self.setState({after:data.url});
+            self.freshPosition();
+          }else{
+            alert("处理失败");
+          }
         }
       });
       /*$.get(url,function(data){
@@ -253,7 +272,7 @@ class App extends Component {
            </a>
         </div>
         <button className="btn-one" onClick={this.subData.bind(this)}>一键处理</button>
-        <Btn sign={this.state.sign} setafter={this.setAfter.bind(this)} settext={this.setText.bind(this)}/>
+        <Btn sign={this.state.id} setafter={this.setAfter.bind(this)} settext={this.setText.bind(this)}/>
       </div>
     );
   }
