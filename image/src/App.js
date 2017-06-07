@@ -122,14 +122,16 @@ class App extends Component {
     var url='http://119.29.34.218:8080/VHDL/FileAction/upload';
     var obj=new XMLHttpRequest();  // XMLHttpRequest对象用于在后台与服务器交换数据          
     obj.open('POST',url,true);
+    obj.withCredentials = true;
+    obj.crossDomain = true;
     obj.onreadystatechange=function(){
         if (obj.readyState == 4 && obj.status == 200) { // readyState==4说明请求已完成
             //fn.call(this, obj.responseText)从服务器获得数据
             console.log(obj.responseText);
             var img=obj.responseText.url;
             var id=obj.responseText.id;
-            /*self.setState({after:img,
-                           id:id});*/
+            self.setState({after:img,
+                           id:id});
         }
     };
     obj.send(formData);
