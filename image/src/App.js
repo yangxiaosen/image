@@ -22,7 +22,8 @@ class App extends Component {
                    shipin4:"0:0",
                    shipin5:"0:0",
                    shipin6:"0:0",
-                   textcontent:"by yang"};
+                   textcontent:"by yang",
+                   yang:""};
   }
 
   handleClick(){
@@ -42,7 +43,8 @@ class App extends Component {
     oFReader.readAsDataURL(image);
     oFReader.onload=function(e){
       self.setState({background:e.target.result,
-        after:e.target.result});
+        after:e.target.result,
+        yang:e.target.result});
     };
   }
 
@@ -63,8 +65,8 @@ class App extends Component {
     //计算相对位置
     console.log(e.clientX-imagel);
     console.log(e.clientY-imaget);
-    var x=(e.clientX-imagel)/480;
-    var y=(e.clientY-imaget)/350;
+    var x=(e.clientX-imagel-50)/480;
+    var y=(e.clientY-imaget-20)/350;
     //拼接成字符串
     var position=x+':'+y;
 
@@ -225,7 +227,11 @@ class App extends Component {
           console.log(data);
           self.freshPosition();
           if(data.url){
-            self.setState({after:data.url});
+            var image = document.getElementById('imagehandle');
+            image.src=data.url+'?random='+Math.random();
+            console.log(image);
+            console.log(image.src);
+            //self.setState({after:data.url});
             self.freshPosition();
           }else{
             alert("处理失败");
@@ -272,7 +278,7 @@ class App extends Component {
            </a>
         </div>
         <button className="btn-one" onClick={this.subData.bind(this)}>一键处理</button>
-        <Btn sign={this.state.id} setafter={this.setAfter.bind(this)} settext={this.setText.bind(this)}/>
+        <Btn yang={this.state.yang} sign={this.state.id} setafter={this.setAfter.bind(this)} settext={this.setText.bind(this)}/>
       </div>
     );
   }

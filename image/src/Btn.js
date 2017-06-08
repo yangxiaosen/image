@@ -10,22 +10,86 @@ class Btn extends Component {
                    action:'none'};
   }
 
-	handleClick(){
+	handleClick(event){
 		    try {
 		        var canvas = fx.canvas();
 		    } catch (e) {
 		        alert(e);
 		        return;
 		    }
+		    var num=event.target.getAttribute("data-target");
 		    var image = document.getElementById('imagehandle');
+		    image.src=this.props.yang;
             var texture = canvas.texture(image);
+            switch(num){
+            	case '1':
+            	//油画效果
+                canvas.draw(texture).ink(0.50).update();
+                break;
+                case '2':
+                //朦胧
+                canvas.draw(texture).lensBlur(10, 0.75, 0).update();
+                break;
+                case '3':
+                //回忆
+                canvas.draw(texture).sepia(1).update();
+                break;
+                case '4':
+                //锐化
+                canvas.draw(texture).unsharpMask(20, 2).update();
+                break;
+                case '5':
+                //边缘模糊
+                canvas.draw(texture).tiltShift(50, 300, 350, 50, 15, 200).update();
+                break;
+                case '6':
+                //视觉冲击
+                canvas.draw(texture).zoomBlur(327, 250.5, 0.3).update();
+                break;
+                case '7':
+                //颗粒感
+                canvas.draw(texture).colorHalftone(320, 239.5, 0.25, 4).update();
+                break;
+                case '8':
+                //抽象画
+                canvas.draw(texture).edgeWork(10).update();
+                break;
+                case '9':
+                //鱼眼
+                canvas.draw(texture).bulgePinch(334, 249.5, 200, 0.5).update();
+                break;
+                case '10':
+                //空间扭曲
+                canvas.draw(texture).swirl(200, 180, 200, 3).update();
+                break;
+                default:
+                alert("错啦");
+            }
+            //油画效果
             //canvas.draw(texture).ink(0.50).update();
-            canvas.draw(texture).lensBlur(10, 0.75, 0).update();
-            //console.log(canvas);
-            //console.log(canvas.toDataURL());
+            //朦胧
+            //canvas.draw(texture).lensBlur(10, 0.75, 0).update();
+            //回忆
+            //canvas.draw(texture).sepia(1).update();
+            //锐化
+            //canvas.draw(texture).unsharpMask(20, 2).update();
+            //边缘模糊
+            //canvas.draw(texture).tiltShift(96, 359.25, 328, 271.390625, 15, 200).update();
+            //视觉冲击
+            //canvas.draw(texture).zoomBlur(327, 250.5, 0.3).update();
+            //粗糙效果
+            //canvas.draw(texture).colorHalftone(320, 239.5, 0.25, 4).update();
+            //抽象画
+            //canvas.draw(texture).edgeWork(10).update();
+            //鱼眼
+            //canvas.draw(texture).bulgePinch(334, 249.5, 200, 0.5).update();
+            //空间扭曲
+            //canvas.draw(texture).swirl(323, 240.5, 200, 3).update();
+
             /*image.parentNode.insertBefore(canvas, image);
             image.parentNode.removeChild(image);*/
             image.src=canvas.toDataURL();
+            this.freshIcon();
 	}
 
 	btnClick1(e){
@@ -84,7 +148,11 @@ class Btn extends Component {
           console.log(data);
           if(data.url){
           	//self.setState({after:data.url});
-          	this.props.setafter(data.url);
+          	self.props.setafter(data.url);
+          	console.log(data.url);
+          	var image = document.getElementById('imagehandle');
+            image.src=data.url+'?random='+Math.random();
+            console.log(image.src);
           }else{
           	alert("处理失败");
           }
@@ -109,19 +177,23 @@ class Btn extends Component {
 		return(
 			<div>
 			<div className="btn-choose">
-				<div onClick={this.handleClick.bind(this)}>油画</div>
+				{/*<div onClick={this.handleClick.bind(this)}>油画</div>*/}
 	            <div data-target="btn-list1" onClick={this.btnClick1.bind(this)}>基础编辑</div>
 	            <div data-target="btn-list2" onClick={this.btnClick1.bind(this)}>饰品</div>
 	            <div data-target="btn-list3" onClick={this.btnClick1.bind(this)}>边框</div>
 	            <div data-target="btn-list4" onClick={this.btnClick1.bind(this)}>场景</div>
             </div>
             <div id="btn-list1" className="btn-list" ref="basicevent">
-            	<div className="glfxshow">inh</div>
-	            <div className="glfxshow">blur</div>
-	            <div className="glfxshow">lens blur</div>
-	            <div className="glfxshow">vignetle</div>
-	            <div className="glfxshow">sepig</div>
-	            <div className="glfxshow">something</div>
+            	<div className="glfxshow" data-target="1" onClick={this.handleClick.bind(this)}>油画效果</div>
+	            <div className="glfxshow" data-target="2" onClick={this.handleClick.bind(this)}>朦胧</div>
+	            <div className="glfxshow" data-target="3" onClick={this.handleClick.bind(this)}>回忆</div>
+	            <div className="glfxshow" data-target="4" onClick={this.handleClick.bind(this)}>锐化</div>
+	            <div className="glfxshow" data-target="5" onClick={this.handleClick.bind(this)}>边缘模糊</div>
+	            <div className="glfxshow" data-target="6" onClick={this.handleClick.bind(this)}>视觉冲击</div>
+	            <div className="glfxshow" data-target="7" onClick={this.handleClick.bind(this)}>颗粒感</div>
+	            <div className="glfxshow" data-target="8" onClick={this.handleClick.bind(this)}>抽象画</div>
+	            <div className="glfxshow" data-target="9" onClick={this.handleClick.bind(this)}>鱼眼</div>
+	            <div className="glfxshow" data-target="10" onClick={this.handleClick.bind(this)}>空间扭曲</div>
             </div>
             <div id="btn-list2" className="btn-list">
             	<div className="watermark1" id="watermark1" data-target="shipin1" draggable="true" onDragStart={this.drag}></div>
