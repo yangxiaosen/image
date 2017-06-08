@@ -56,7 +56,7 @@ class Btn extends Component {
                 break;
                 case '9':
                 //鱼眼
-                canvas.draw(texture).bulgePinch(334, 249.5, 200, 0.5).update();
+                canvas.draw(texture).bulgePinch(200, 200, 200, 0.5).update();
                 break;
                 case '10':
                 //空间扭曲
